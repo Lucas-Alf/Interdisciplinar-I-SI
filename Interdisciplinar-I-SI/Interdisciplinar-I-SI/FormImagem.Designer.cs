@@ -66,6 +66,7 @@
             this.buttonRedimencionar.TabIndex = 3;
             this.buttonRedimencionar.Text = "Redimencionar";
             this.buttonRedimencionar.UseVisualStyleBackColor = true;
+            this.buttonRedimencionar.Click += new System.EventHandler(this.buttonRedimencionar_Click);
             // 
             // FormImagem
             // 

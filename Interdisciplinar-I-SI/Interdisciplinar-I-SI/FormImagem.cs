@@ -25,5 +25,10 @@ namespace Interdisciplinar_I_SI
                 pictureBoxImagem.ImageLocation = file.FileName;
             }
         }
+
+        private void buttonRedimencionar_Click(object sender, EventArgs e)
+        {
+            new Redimencionador().RedimencionarComMatriz(pictureBoxImagem.Image);
+        }
     }
 }
