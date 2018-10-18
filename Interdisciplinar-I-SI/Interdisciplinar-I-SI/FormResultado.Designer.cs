@@ -39,15 +39,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBoxResultado.Location = new System.Drawing.Point(-1, 0);
             this.pictureBoxResultado.Name = "pictureBoxResultado";
-            this.pictureBoxResultado.Size = new System.Drawing.Size(539, 393);
+            this.pictureBoxResultado.Size = new System.Drawing.Size(539, 432);
             this.pictureBoxResultado.TabIndex = 0;
             this.pictureBoxResultado.TabStop = false;
+            this.pictureBoxResultado.Click += new System.EventHandler(this.pictureBoxResultado_Click);
             // 
             // FormResultado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(534, 388);
+            this.ClientSize = new System.Drawing.Size(534, 431);
             this.Controls.Add(this.pictureBoxResultado);
             this.Name = "FormResultado";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -18,7 +18,7 @@ namespace Interdisciplinar_I_SI
         private void buttonInputImage_Click(object sender, EventArgs e)
         {
             OpenFileDialog file = new OpenFileDialog();
-            file.Filter = "jpg|*.jpg";
+            file.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
             if (file.ShowDialog() == DialogResult.OK)
             {
                 pictureBoxImagem.SizeMode = PictureBoxSizeMode.CenterImage;
@@ -40,13 +40,13 @@ namespace Interdisciplinar_I_SI
                 }
                 else
                 {
-                    if (String.IsNullOrEmpty(textBoxPorcento.Text))
+                    if (String.IsNullOrEmpty(textBoxPixeis.Text))
                     {
-                        MessageBox.Show("Informe um percentual!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        MessageBox.Show("A proporção de pixeis não foi informada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     }
                     else
                     {
-                        new Redimencionador().RedimencionarComMatriz(pictureBoxImagem.Image, Convert.ToInt32(textBoxPorcento.Text));
+                        new Redimencionador().RedimencionarComMatriz(pictureBoxImagem.Image, Convert.ToInt32(textBoxPixeis.Text));
                     }
                 }
             }
@@ -79,6 +79,16 @@ namespace Interdisciplinar_I_SI
         private void progressBarRedimencionamento_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormImagem_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

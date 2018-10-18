@@ -33,8 +33,8 @@
             // 
             // progressBarRedimencionamento
             // 
-            this.progressBarRedimencionamento.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.progressBarRedimencionamento.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBarRedimencionamento.Location = new System.Drawing.Point(12, 12);
             this.progressBarRedimencionamento.Name = "progressBarRedimencionamento";

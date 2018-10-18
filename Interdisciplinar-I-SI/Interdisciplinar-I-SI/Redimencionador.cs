@@ -1,10 +1,11 @@
 ﻿using System.Drawing;
+using System.Threading.Tasks;
 
 namespace Interdisciplinar_I_SI
 {
     public class Redimencionador
     {
-        public Image RedimencionarComMatriz(Image imagem, int porcento)
+        public Image RedimencionarComMatriz(Image imagem, int pixeis)
         {
             var size = imagem.Size;
             var bitmap = new Bitmap(imagem);
@@ -17,41 +18,43 @@ namespace Interdisciplinar_I_SI
                 }
             }
 
-            int newWidth = bitmap.Width + (porcento * bitmap.Width / 100);
-            int newHeight = bitmap.Height + (porcento * bitmap.Height / 100);
-            var newBitmap = new Bitmap(newWidth, newHeight);
+            int sizeNxM = bitmap.Width * pixeis; //bitmap.Width + (porcento * bitmap.Width / 100);
+            var newBitmap = new Bitmap(sizeNxM, sizeNxM);
 
             var progressBar = new ProgressBar();
-            progressBar.progressBarRedimencionamento.Maximum = bitmap.Size.Height;
+            progressBar.progressBarRedimencionamento.Maximum = bitmap.Width;
             progressBar.Show();
             progressBar.progressBarRedimencionamento.Value = 0;
 
 
-            for (int y = 0; y < bitmap.Size.Height; y++)
+            //Color CorEmNegativo = Color.FromArgb(255 - originalColor.R, 255 - originalColor.G, 255 - originalColor.B);
+            for (int y = 0; y < bitmap.Height; y++)
             {
-                for (int x = 0; x < bitmap.Size.Width; x++)
+                Parallel.For(0, bitmap.Width, x =>
                 {
-                    for (int i = 0; i <= (porcento * bitmap.Width / 100); i++)
+                    lock (newBitmap)
                     {
-                        for (int j = 0; j <= (porcento * bitmap.Height / 100); j++)
+                        for (int i = 0; i < pixeis; i++)
                         {
-                            newBitmap.SetPixel(x + i, y + j, Color.FromArgb(matriz[x, y]));
+                            for (int j = 0; j < pixeis; j++)
+                            {
+                                Color originalColor = bitmap.GetPixel(x, y);
+                                newBitmap.SetPixel(i + (x + ((x * pixeis) - x)), j + (y + ((y * pixeis) - y)), originalColor);
+                            }
                         }
                     }
-                }
+                });
                 progressBar.progressBarRedimencionamento.Value = y;
             }
-
-            progressBar.Close();
-
             var formResultado = new FormResultado();
             formResultado.pictureBoxResultado.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            formResultado.Height = newBitmap.Height;
+            formResultado.Width = newBitmap.Width;
             var imagem2 = newBitmap.GetThumbnailImage(newBitmap.Width, newBitmap.Height, null, System.IntPtr.Zero);
-            formResultado.Height = newHeight + (porcento * newHeight / 100);
-            formResultado.Width = newWidth + +(porcento * newWidth / 100);
-            formResultado.Show();
             formResultado.pictureBoxResultado.Image = imagem2;
-            return imagem;
+            formResultado.Show();
+            progressBar.Close();
+            return imagem2;
         }
     }
 }
