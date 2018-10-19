@@ -31,6 +31,7 @@ namespace Interdisciplinar_I_SI
             // y = (Height / i)
             // x = (Width % i)
             // Reaproveitar os threads do Parallel.For usando += na quantidade de nucleos
+            // Utilizar task: Task.Factory.StartNew(() => Parallel.For(0, N, i =>
             for (int y = 0; y < bitmap.Height; y++)
             {
                 Parallel.For(0, bitmap.Width, x =>
