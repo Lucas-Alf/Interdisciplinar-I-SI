@@ -27,7 +27,10 @@ namespace Interdisciplinar_I_SI
             progressBar.Show();
             progressBar.progressBarRedimencionamento.Value = 0;
 
-
+            // fazer em um for paralelo só, sem lock, usando i = Height * Width
+            // y = (Height / i)
+            // x = (Width % i)
+            // Reaproveitar os threads do Parallel.For usando += na quantidade de nucleos
             for (int y = 0; y < bitmap.Height; y++)
             {
                 Parallel.For(0, bitmap.Width, x =>
