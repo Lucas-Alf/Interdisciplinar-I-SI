@@ -28,33 +28,30 @@ namespace Interdisciplinar_I_SI
 
         private void buttonRedimencionar_Click(object sender, EventArgs e)
         {
-            if (pictureBoxImagem.Image == null)
+            if (validaImagem())
             {
-                MessageBox.Show("Nenhuma imagem foi selecionada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }
-            else
-            {
-                if (pictureBoxImagem.Image.Height != pictureBoxImagem.Image.Width)
-                {
-                    MessageBox.Show("A imagem não é quadrada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                }
-                else
-                {
-                    if (String.IsNullOrEmpty(textBoxPixeis.Text))
-                    {
-                        MessageBox.Show("A proporção de pixeis não foi informada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    }
-                    else
-                    {
-                        new Redimencionador().RedimencionarComMatriz(pictureBoxImagem.Image, Convert.ToInt32(textBoxPixeis.Text));
-                    }
-                }
+                new Redimencionador().RedimencionarComMatriz(pictureBoxImagem.Image, Convert.ToInt32(textBoxPixeis.Text), false);
             }
         }
 
         private void textBoxPorcento_TextChanged(object sender, EventArgs e)
         {
-
+            int numero;
+            if (Int32.TryParse(textBoxPixeis.Text, out numero))
+            {
+                if (numero < 0)
+                {
+                    textBoxPixeis.Text = "";
+                }
+                else
+                {
+                    labelProporcao.Text = numero + "x" + numero;
+                }
+            }
+            else
+            {
+                textBoxPixeis.Text = "";
+            }
         }
 
         private void textBoxPorcento_KeyPress(object sender, KeyPressEventArgs e)
@@ -89,6 +86,53 @@ namespace Interdisciplinar_I_SI
         private void FormImagem_FormClosed(object sender, FormClosedEventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        public bool validaImagem()
+        {
+            if (pictureBoxImagem.Image == null)
+            {
+                MessageBox.Show("Nenhuma imagem foi selecionada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return false;
+            }
+            else
+            {
+                if (pictureBoxImagem.Image.Height != pictureBoxImagem.Image.Width)
+                {
+                    MessageBox.Show("A imagem não é quadrada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    return false;
+                }
+                else
+                {
+                    if (String.IsNullOrEmpty(textBoxPixeis.Text) || Convert.ToInt32(textBoxPixeis.Text) <= 0)
+                    {
+                        MessageBox.Show("A proporção de pixeis não foi informada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        private void buttonRedimencionarEInverter_Click(object sender, EventArgs e)
+        {
+            if (validaImagem())
+            {
+                new Redimencionador().RedimencionarComMatriz(pictureBoxImagem.Image, Convert.ToInt32(textBoxPixeis.Text), true);
+            }
+        }
+
+        private void FormImagem_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

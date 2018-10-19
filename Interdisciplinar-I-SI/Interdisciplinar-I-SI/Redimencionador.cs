@@ -5,7 +5,7 @@ namespace Interdisciplinar_I_SI
 {
     public class Redimencionador
     {
-        public Image RedimencionarComMatriz(Image imagem, int pixeis)
+        public Image RedimencionarComMatriz(Image imagem, int pixeis, bool inverso)
         {
             var size = imagem.Size;
             var bitmap = new Bitmap(imagem);
@@ -18,7 +18,7 @@ namespace Interdisciplinar_I_SI
                 }
             }
 
-            int sizeNxM = bitmap.Width * pixeis; //bitmap.Width + (porcento * bitmap.Width / 100);
+            int sizeNxM = bitmap.Width * pixeis;
             var newBitmap = new Bitmap(sizeNxM, sizeNxM);
 
             var progressBar = new ProgressBar();
@@ -27,7 +27,6 @@ namespace Interdisciplinar_I_SI
             progressBar.progressBarRedimencionamento.Value = 0;
 
 
-            //Color CorEmNegativo = Color.FromArgb(255 - originalColor.R, 255 - originalColor.G, 255 - originalColor.B);
             for (int y = 0; y < bitmap.Height; y++)
             {
                 Parallel.For(0, bitmap.Width, x =>
@@ -39,7 +38,8 @@ namespace Interdisciplinar_I_SI
                             for (int j = 0; j < pixeis; j++)
                             {
                                 Color originalColor = bitmap.GetPixel(x, y);
-                                newBitmap.SetPixel(i + (x + ((x * pixeis) - x)), j + (y + ((y * pixeis) - y)), originalColor);
+                                Color corEmNegativo = Color.FromArgb(255 - originalColor.R, 255 - originalColor.G, 255 - originalColor.B);
+                                newBitmap.SetPixel(i + (x + ((x * pixeis) - x)), j + (y + ((y * pixeis) - y)), inverso ? corEmNegativo : originalColor);
                             }
                         }
                     }
