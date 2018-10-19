@@ -91,5 +91,27 @@ namespace Interdisciplinar_I_SI
                 return imagem;
             }
         }
+        
+      // static void MultiplyMatricesParallel(double[,] matA, double[,] matB, double[,] result)
+      // {
+     //   int matACols = matA.GetLength(1);
+     //   int matBCols = matB.GetLength(1);
+     //   int matARows = matA.GetLength(0);
+     //
+     ////   // A basic matrix multiplication.
+     ////   // Parallelize the outer loop to partition the source array by rows.
+     //   Parallel.For(0, matARows, i =>
+     //   {
+     //       for (int j = 0; j < matBCols; j++)
+     //       {
+     //           double temp = 0;
+     //           for (int k = 0; k < matACols; k++)
+     //           {
+     //               temp += matA[i, k] * matB[k, j];
+     //           }
+     //           result[i, j] = temp;
+     //      }
+     //  }); // Parallel.For
+     //}
     }
 }
