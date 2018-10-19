@@ -1,11 +1,12 @@
 ﻿using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Threading.Tasks;
 
 namespace Interdisciplinar_I_SI
 {
     public class Redimencionador
     {
-        public Image RedimencionarComMatriz(Image imagem, int pixeis, bool inverso)
+        public Image RedimencionarComMatriz(Image imagem, int pixeis)
         {
             var size = imagem.Size;
             var bitmap = new Bitmap(imagem);
@@ -38,23 +39,53 @@ namespace Interdisciplinar_I_SI
                             for (int j = 0; j < pixeis; j++)
                             {
                                 Color originalColor = bitmap.GetPixel(x, y);
-                                Color corEmNegativo = Color.FromArgb(255 - originalColor.R, 255 - originalColor.G, 255 - originalColor.B);
-                                newBitmap.SetPixel(i + (x + ((x * pixeis) - x)), j + (y + ((y * pixeis) - y)), inverso ? corEmNegativo : originalColor);
+                                newBitmap.SetPixel(i + (x + ((x * pixeis) - x)), j + (y + ((y * pixeis) - y)), originalColor);
                             }
                         }
                     }
                 });
                 progressBar.progressBarRedimencionamento.Value = y;
             }
-            var formResultado = new FormResultado();
-            formResultado.pictureBoxResultado.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            formResultado.Height = newBitmap.Height;
-            formResultado.Width = newBitmap.Width;
-            var imagem2 = newBitmap.GetThumbnailImage(newBitmap.Width, newBitmap.Height, null, System.IntPtr.Zero);
-            formResultado.pictureBoxResultado.Image = imagem2;
-            formResultado.Show();
+            var imagemRedimencionada = newBitmap.GetThumbnailImage(newBitmap.Width, newBitmap.Height, null, System.IntPtr.Zero);
             progressBar.Close();
-            return imagem2;
+            return imagemRedimencionada;
+        }
+
+        public Image Inverter(Image imagem)
+        {
+            var progressBar = new ProgressBar();
+            progressBar.progressBarRedimencionamento.Maximum = imagem.Width;
+            progressBar.progressBarRedimencionamento.Value = 0;
+            progressBar.Show();
+            var bitmap = new Bitmap(imagem);
+            var newBitmap = new Bitmap(imagem.Width, imagem.Height);
+            for (int y = 0; y < imagem.Height; y++)
+            {
+                Parallel.For(0, bitmap.Width, x =>
+                {
+                    lock (newBitmap)
+                    {
+                        Color originalColor = bitmap.GetPixel(x, y);
+                        Color corEmNegativo = Color.FromArgb(255 - originalColor.R, 255 - originalColor.G, 255 - originalColor.B);
+                        newBitmap.SetPixel(x, y, corEmNegativo);
+                    }
+                });
+                progressBar.progressBarRedimencionamento.Value = y;
+            }
+            progressBar.Close();
+            return newBitmap.GetThumbnailImage(newBitmap.Width, newBitmap.Height, null, System.IntPtr.Zero); ;
+        }
+
+        public Image AntiAliasing(Image imagem)
+        {
+            using (Graphics graph = Graphics.FromImage(imagem))
+            {
+                graph.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graph.CompositingQuality = CompositingQuality.HighQuality;
+                graph.SmoothingMode = SmoothingMode.AntiAlias;
+                graph.DrawImage(imagem, new Rectangle(0, 0, imagem.Width, imagem.Height));
+                return imagem;
+            }
         }
     }
 }

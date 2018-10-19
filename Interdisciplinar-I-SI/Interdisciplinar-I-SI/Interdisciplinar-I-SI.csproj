@@ -52,12 +52,6 @@
     <Compile Include="FormImagem.Designer.cs">
       <DependentUpon>FormImagem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormResultado.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormResultado.Designer.cs">
-      <DependentUpon>FormResultado.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProgressBar.cs">
       <SubType>Form</SubType>
@@ -69,9 +63,6 @@
     <Compile Include="Redimencionador.cs" />
     <EmbeddedResource Include="FormImagem.resx">
       <DependentUpon>FormImagem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormResultado.resx">
-      <DependentUpon>FormResultado.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProgressBar.resx">
       <DependentUpon>ProgressBar.cs</DependentUpon>

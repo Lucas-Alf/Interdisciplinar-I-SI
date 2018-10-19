@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace Interdisciplinar_I_SI
@@ -30,7 +31,8 @@ namespace Interdisciplinar_I_SI
         {
             if (validaImagem())
             {
-                new Redimencionador().RedimencionarComMatriz(pictureBoxImagem.Image, Convert.ToInt32(textBoxPixeis.Text), false);
+                var imagem = new Redimencionador().RedimencionarComMatriz(pictureBoxImagem.Image, Convert.ToInt32(textBoxPixeis.Text));
+                pictureBoxImagem.Image = imagem;
             }
         }
 
@@ -97,21 +99,21 @@ namespace Interdisciplinar_I_SI
         {
             if (pictureBoxImagem.Image == null)
             {
-                MessageBox.Show("Nenhuma imagem foi selecionada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show("Nenhuma imagem foi selecionada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             else
             {
                 if (pictureBoxImagem.Image.Height != pictureBoxImagem.Image.Width)
                 {
-                    MessageBox.Show("A imagem não é quadrada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    MessageBox.Show("A imagem não é quadrada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return false;
                 }
                 else
                 {
                     if (String.IsNullOrEmpty(textBoxPixeis.Text) || Convert.ToInt32(textBoxPixeis.Text) <= 0)
                     {
-                        MessageBox.Show("A proporção de pixeis não foi informada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                        MessageBox.Show("A proporção de pixeis não foi informada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
                     }
                     else
@@ -126,13 +128,52 @@ namespace Interdisciplinar_I_SI
         {
             if (validaImagem())
             {
-                new Redimencionador().RedimencionarComMatriz(pictureBoxImagem.Image, Convert.ToInt32(textBoxPixeis.Text), true);
+                var imagem = new Redimencionador().Inverter(pictureBoxImagem.Image);
+                pictureBoxImagem.Image = imagem;
             }
         }
 
         private void FormImagem_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonAntiAliasing_Click(object sender, EventArgs e)
+        {
+            if (validaImagem())
+            {
+                var imagem = new Redimencionador().AntiAliasing(pictureBoxImagem.Image);
+                pictureBoxImagem.Image = imagem;
+                MessageBox.Show("Filtro aplicado com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void buttonSalvarImagem_Click(object sender, EventArgs e)
+        {
+            if (pictureBoxImagem.Image != null)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.Filter = "Images|*.png;*.bmp;*.jpg";
+                ImageFormat format = ImageFormat.Png;
+                if (sfd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string ext = System.IO.Path.GetExtension(sfd.FileName);
+                    switch (ext)
+                    {
+                        case ".jpg":
+                            format = ImageFormat.Jpeg;
+                            break;
+                        case ".bmp":
+                            format = ImageFormat.Bmp;
+                            break;
+                    }
+                    pictureBoxImagem.Image.Save(sfd.FileName, format);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nenhuma imagem foi selecionada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

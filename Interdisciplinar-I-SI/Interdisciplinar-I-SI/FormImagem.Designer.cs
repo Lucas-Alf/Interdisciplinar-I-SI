@@ -35,6 +35,8 @@
             this.textBoxPixeis = new System.Windows.Forms.TextBox();
             this.buttonRedimencionarEInverter = new System.Windows.Forms.Button();
             this.labelProporcao = new System.Windows.Forms.Label();
+            this.buttonAntiAliasing = new System.Windows.Forms.Button();
+            this.buttonSalvarImagem = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagem)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +48,7 @@
             this.pictureBoxImagem.BackColor = System.Drawing.SystemColors.Control;
             this.pictureBoxImagem.Location = new System.Drawing.Point(187, -3);
             this.pictureBoxImagem.Name = "pictureBoxImagem";
-            this.pictureBoxImagem.Size = new System.Drawing.Size(512, 421);
+            this.pictureBoxImagem.Size = new System.Drawing.Size(650, 530);
             this.pictureBoxImagem.TabIndex = 0;
             this.pictureBoxImagem.TabStop = false;
             // 
@@ -95,7 +97,7 @@
             this.buttonRedimencionarEInverter.Name = "buttonRedimencionarEInverter";
             this.buttonRedimencionarEInverter.Size = new System.Drawing.Size(164, 23);
             this.buttonRedimencionarEInverter.TabIndex = 6;
-            this.buttonRedimencionarEInverter.Text = "Redimencionar e Inverter";
+            this.buttonRedimencionarEInverter.Text = "Inverter";
             this.buttonRedimencionarEInverter.UseVisualStyleBackColor = true;
             this.buttonRedimencionarEInverter.Click += new System.EventHandler(this.buttonRedimencionarEInverter_Click);
             // 
@@ -108,12 +110,35 @@
             this.labelProporcao.TabIndex = 7;
             this.labelProporcao.Text = "0x0";
             // 
+            // buttonAntiAliasing
+            // 
+            this.buttonAntiAliasing.Location = new System.Drawing.Point(13, 155);
+            this.buttonAntiAliasing.Name = "buttonAntiAliasing";
+            this.buttonAntiAliasing.Size = new System.Drawing.Size(163, 23);
+            this.buttonAntiAliasing.TabIndex = 8;
+            this.buttonAntiAliasing.Text = "Anti Aliasing";
+            this.buttonAntiAliasing.UseVisualStyleBackColor = true;
+            this.buttonAntiAliasing.Click += new System.EventHandler(this.buttonAntiAliasing_Click);
+            // 
+            // buttonSalvarImagem
+            // 
+            this.buttonSalvarImagem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonSalvarImagem.Location = new System.Drawing.Point(15, 488);
+            this.buttonSalvarImagem.Name = "buttonSalvarImagem";
+            this.buttonSalvarImagem.Size = new System.Drawing.Size(161, 23);
+            this.buttonSalvarImagem.TabIndex = 9;
+            this.buttonSalvarImagem.Text = "Salvar Imagem";
+            this.buttonSalvarImagem.UseVisualStyleBackColor = true;
+            this.buttonSalvarImagem.Click += new System.EventHandler(this.buttonSalvarImagem_Click);
+            // 
             // FormImagem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Silver;
-            this.ClientSize = new System.Drawing.Size(696, 414);
+            this.ClientSize = new System.Drawing.Size(834, 523);
+            this.Controls.Add(this.buttonSalvarImagem);
+            this.Controls.Add(this.buttonAntiAliasing);
             this.Controls.Add(this.pictureBoxImagem);
             this.Controls.Add(this.labelProporcao);
             this.Controls.Add(this.buttonRedimencionarEInverter);
@@ -141,6 +166,8 @@
         private System.Windows.Forms.TextBox textBoxPixeis;
         private System.Windows.Forms.Button buttonRedimencionarEInverter;
         private System.Windows.Forms.Label labelProporcao;
+        private System.Windows.Forms.Button buttonAntiAliasing;
+        private System.Windows.Forms.Button buttonSalvarImagem;
     }
 }
 
