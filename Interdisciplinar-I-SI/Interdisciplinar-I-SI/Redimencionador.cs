@@ -9,12 +9,12 @@ namespace Interdisciplinar_I_SI
         public Image RedimencionarComMatriz(Image imagem, int pixeis)
         {
             var bitmap = new Bitmap(imagem);
-            Color[,] matriz = new Color[bitmap.Size.Height, bitmap.Size.Width];
-            Color[,] novaMatriz = new Color[bitmap.Width * pixeis, bitmap.Height * pixeis];
 
             var progressBar = new ProgressBar();
             progressBar.progressBarRedimencionamento.Maximum = bitmap.Size.Width + bitmap.Height + (bitmap.Width * pixeis);
             progressBar.Show();
+
+            Color[,] matriz = new Color[bitmap.Size.Height, bitmap.Size.Width];
 
             for (int x = 0; x < bitmap.Size.Width; x++)
             {
@@ -26,6 +26,7 @@ namespace Interdisciplinar_I_SI
             }
 
 
+            Color[,] novaMatriz = new Color[bitmap.Width * pixeis, bitmap.Height * pixeis];
             for (int y = 0; y < bitmap.Height; y++)
             {
                 Parallel.For(0, bitmap.Width, x =>
