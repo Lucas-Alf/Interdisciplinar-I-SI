@@ -15,7 +15,6 @@ namespace Interdisciplinar_I_SI
             progressBar.Show();
 
             Color[,] matriz = new Color[bitmap.Size.Height, bitmap.Size.Width];
-
             for (int x = 0; x < bitmap.Size.Width; x++)
             {
                 for (int y = 0; y < bitmap.Size.Height; y++)
@@ -60,24 +59,41 @@ namespace Interdisciplinar_I_SI
         public Image Inverter(Image imagem)
         {
             var progressBar = new ProgressBar();
-            progressBar.progressBarRedimencionamento.Maximum = imagem.Width;
+            progressBar.progressBarRedimencionamento.Maximum = imagem.Width * 3;
             progressBar.progressBarRedimencionamento.Value = 0;
             progressBar.Show();
+
             var bitmap = new Bitmap(imagem);
-            var newBitmap = new Bitmap(imagem.Width, imagem.Height);
-            for (int y = 0; y < imagem.Height; y++)
+            Color[,] matriz = new Color[bitmap.Size.Height, bitmap.Size.Width];
+            for (int x = 0; x < bitmap.Size.Width; x++)
+            {
+                for (int y = 0; y < bitmap.Size.Height; y++)
+                {
+                    matriz[x, y] = bitmap.GetPixel(x, y);
+                }
+                progressBar.progressBarRedimencionamento.Value += 1;
+            }
+
+            Color[,] novaMatriz = new Color[bitmap.Width, bitmap.Height];
+            for (int y = 0; y < bitmap.Height; y++)
             {
                 Parallel.For(0, bitmap.Width, x =>
                 {
-                    lock (newBitmap)
-                    {
-                        Color originalColor = bitmap.GetPixel(x, y);
-                        Color corEmNegativo = Color.FromArgb(255 - originalColor.R, 255 - originalColor.G, 255 - originalColor.B);
-                        newBitmap.SetPixel(x, y, corEmNegativo);
-                    }
+                    novaMatriz[x, y] = Color.FromArgb(255 - matriz[x, y].R, 255 - matriz[x, y].G, 255 - matriz[x, y].B);
                 });
-                progressBar.progressBarRedimencionamento.Value = y;
+                progressBar.progressBarRedimencionamento.Value += 1;
             }
+
+            var newBitmap = new Bitmap(imagem.Width, imagem.Height);
+            for (int x = 0; x < bitmap.Width; x++)
+            {
+                for (int y = 0; y < bitmap.Height; y++)
+                {
+                    newBitmap.SetPixel(x, y, novaMatriz[x, y]);
+                }
+                progressBar.progressBarRedimencionamento.Value += 1;
+            }
+
             progressBar.Close();
             return newBitmap.GetThumbnailImage(newBitmap.Width, newBitmap.Height, null, System.IntPtr.Zero); ;
         }
