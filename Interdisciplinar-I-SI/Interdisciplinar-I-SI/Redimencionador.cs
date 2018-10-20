@@ -8,48 +8,49 @@ namespace Interdisciplinar_I_SI
     {
         public Image RedimencionarComMatriz(Image imagem, int pixeis)
         {
-            var size = imagem.Size;
             var bitmap = new Bitmap(imagem);
-            int[,] matriz = new int[bitmap.Size.Height, bitmap.Size.Width];
+            Color[,] matriz = new Color[bitmap.Size.Height, bitmap.Size.Width];
+            Color[,] novaMatriz = new Color[bitmap.Width * pixeis, bitmap.Height * pixeis];
+
+            var progressBar = new ProgressBar();
+            progressBar.progressBarRedimencionamento.Maximum = bitmap.Size.Width + bitmap.Height + (bitmap.Width * pixeis);
+            progressBar.Show();
+
             for (int x = 0; x < bitmap.Size.Width; x++)
             {
                 for (int y = 0; y < bitmap.Size.Height; y++)
                 {
-                    matriz[x, y] = bitmap.GetPixel(x, y).ToArgb();
+                    matriz[x, y] = bitmap.GetPixel(x, y);
                 }
+                progressBar.progressBarRedimencionamento.Value += 1;
             }
 
-            int sizeNxM = bitmap.Width * pixeis;
-            var newBitmap = new Bitmap(sizeNxM, sizeNxM);
 
-            var progressBar = new ProgressBar();
-            progressBar.progressBarRedimencionamento.Maximum = bitmap.Width;
-            progressBar.Show();
-            progressBar.progressBarRedimencionamento.Value = 0;
-
-            // fazer em um for paralelo só, sem lock, usando i = Height * Width
-            // y = (Height / i)
-            // x = (Width % i)
-            // Reaproveitar os threads do Parallel.For usando += na quantidade de nucleos
-            // Utilizar task: Task.Factory.StartNew(() => Parallel.For(0, N, i =>
             for (int y = 0; y < bitmap.Height; y++)
             {
                 Parallel.For(0, bitmap.Width, x =>
                 {
-                    lock (newBitmap)
+                    for (int i = 0; i < pixeis; i++)
                     {
-                        for (int i = 0; i < pixeis; i++)
+                        for (int j = 0; j < pixeis; j++)
                         {
-                            for (int j = 0; j < pixeis; j++)
-                            {
-                                Color originalColor = bitmap.GetPixel(x, y);
-                                newBitmap.SetPixel(i + (x + ((x * pixeis) - x)), j + (y + ((y * pixeis) - y)), originalColor);
-                            }
+                            novaMatriz[i + (x + ((x * pixeis) - x)), j + (y + ((y * pixeis) - y))] = matriz[x, y];
                         }
                     }
                 });
-                progressBar.progressBarRedimencionamento.Value = y;
+                progressBar.progressBarRedimencionamento.Value += 1;
             }
+
+            var newBitmap = new Bitmap(bitmap.Width * pixeis, bitmap.Height * pixeis);
+            for (int x = 0; x < bitmap.Width * pixeis; x++)
+            {
+                for (int y = 0; y < bitmap.Height * pixeis; y++)
+                {
+                    newBitmap.SetPixel(x, y, novaMatriz[x, y]);
+                }
+                progressBar.progressBarRedimencionamento.Value += 1;
+            }
+
             var imagemRedimencionada = newBitmap.GetThumbnailImage(newBitmap.Width, newBitmap.Height, null, System.IntPtr.Zero);
             progressBar.Close();
             return imagemRedimencionada;
@@ -91,27 +92,27 @@ namespace Interdisciplinar_I_SI
                 return imagem;
             }
         }
-        
-      // static void MultiplyMatricesParallel(double[,] matA, double[,] matB, double[,] result)
-      // {
-     //   int matACols = matA.GetLength(1);
-     //   int matBCols = matB.GetLength(1);
-     //   int matARows = matA.GetLength(0);
-     //
-     ////   // A basic matrix multiplication.
-     ////   // Parallelize the outer loop to partition the source array by rows.
-     //   Parallel.For(0, matARows, i =>
-     //   {
-     //       for (int j = 0; j < matBCols; j++)
-     //       {
-     //           double temp = 0;
-     //           for (int k = 0; k < matACols; k++)
-     //           {
-     //               temp += matA[i, k] * matB[k, j];
-     //           }
-     //           result[i, j] = temp;
-     //      }
-     //  }); // Parallel.For
-     //}
+
+        // static void MultiplyMatricesParallel(double[,] matA, double[,] matB, double[,] result)
+        // {
+        //   int matACols = matA.GetLength(1);
+        //   int matBCols = matB.GetLength(1);
+        //   int matARows = matA.GetLength(0);
+        //
+        ////   // A basic matrix multiplication.
+        ////   // Parallelize the outer loop to partition the source array by rows.
+        //   Parallel.For(0, matARows, i =>
+        //   {
+        //       for (int j = 0; j < matBCols; j++)
+        //       {
+        //           double temp = 0;
+        //           for (int k = 0; k < matACols; k++)
+        //           {
+        //               temp += matA[i, k] * matB[k, j];
+        //           }
+        //           result[i, j] = temp;
+        //      }
+        //  }); // Parallel.For
+        //}
     }
 }
