@@ -6,10 +6,9 @@ namespace Interdisciplinar_I_SI
 {
     public class Redimencionador
     {
-        public Image RedimencionarComMatriz(Image imagem, int pixeis)
+        public Image RedimencionarParalelo(Image imagem, int pixeis)
         {
             var bitmap = new Bitmap(imagem);
-
             var progressBar = new ProgressBar();
             progressBar.progressBarRedimencionamento.Maximum = bitmap.Size.Width + bitmap.Height + (bitmap.Width * pixeis);
             progressBar.Show();
@@ -23,7 +22,6 @@ namespace Interdisciplinar_I_SI
                 }
                 progressBar.progressBarRedimencionamento.Value += 1;
             }
-
 
             Color[,] novaMatriz = new Color[bitmap.Width * pixeis, bitmap.Height * pixeis];
             for (int y = 0; y < bitmap.Height; y++)
@@ -56,7 +54,55 @@ namespace Interdisciplinar_I_SI
             return imagemRedimencionada;
         }
 
-        public Image Inverter(Image imagem)
+        public Image RedimencionarSequencial(Image imagem, int pixeis)
+        {
+            var bitmap = new Bitmap(imagem);
+            var progressBar = new ProgressBar();
+            progressBar.progressBarRedimencionamento.Maximum = bitmap.Size.Width + bitmap.Height + (bitmap.Width * pixeis);
+            progressBar.Show();
+
+            Color[,] matriz = new Color[bitmap.Size.Height, bitmap.Size.Width];
+            for (int x = 0; x < bitmap.Size.Width; x++)
+            {
+                for (int y = 0; y < bitmap.Size.Height; y++)
+                {
+                    matriz[x, y] = bitmap.GetPixel(x, y);
+                }
+                progressBar.progressBarRedimencionamento.Value += 1;
+            }
+
+            Color[,] novaMatriz = new Color[bitmap.Width * pixeis, bitmap.Height * pixeis];
+            for (int y = 0; y < bitmap.Height; y++)
+            {
+                for (int x = 0; x < bitmap.Width; x++)
+                {
+                    for (int i = 0; i < pixeis; i++)
+                    {
+                        for (int j = 0; j < pixeis; j++)
+                        {
+                            novaMatriz[i + (x + ((x * pixeis) - x)), j + (y + ((y * pixeis) - y))] = matriz[x, y];
+                        }
+                    }
+                }
+                progressBar.progressBarRedimencionamento.Value += 1;
+            }
+
+            var newBitmap = new Bitmap(bitmap.Width * pixeis, bitmap.Height * pixeis);
+            for (int x = 0; x < bitmap.Width * pixeis; x++)
+            {
+                for (int y = 0; y < bitmap.Height * pixeis; y++)
+                {
+                    newBitmap.SetPixel(x, y, novaMatriz[x, y]);
+                }
+                progressBar.progressBarRedimencionamento.Value += 1;
+            }
+
+            var imagemRedimencionada = newBitmap.GetThumbnailImage(newBitmap.Width, newBitmap.Height, null, System.IntPtr.Zero);
+            progressBar.Close();
+            return imagemRedimencionada;
+        }
+
+        public Image InverterCor(Image imagem)
         {
             var progressBar = new ProgressBar();
             progressBar.progressBarRedimencionamento.Maximum = imagem.Width * 3;
@@ -95,7 +141,7 @@ namespace Interdisciplinar_I_SI
             }
 
             progressBar.Close();
-            return newBitmap.GetThumbnailImage(newBitmap.Width, newBitmap.Height, null, System.IntPtr.Zero); ;
+            return newBitmap.GetThumbnailImage(newBitmap.Width, newBitmap.Height, null, System.IntPtr.Zero);
         }
 
         public Image AntiAliasing(Image imagem)
@@ -109,27 +155,5 @@ namespace Interdisciplinar_I_SI
                 return imagem;
             }
         }
-
-        // static void MultiplyMatricesParallel(double[,] matA, double[,] matB, double[,] result)
-        // {
-        //   int matACols = matA.GetLength(1);
-        //   int matBCols = matB.GetLength(1);
-        //   int matARows = matA.GetLength(0);
-        //
-        ////   // A basic matrix multiplication.
-        ////   // Parallelize the outer loop to partition the source array by rows.
-        //   Parallel.For(0, matARows, i =>
-        //   {
-        //       for (int j = 0; j < matBCols; j++)
-        //       {
-        //           double temp = 0;
-        //           for (int k = 0; k < matACols; k++)
-        //           {
-        //               temp += matA[i, k] * matB[k, j];
-        //           }
-        //           result[i, j] = temp;
-        //      }
-        //  }); // Parallel.For
-        //}
     }
 }

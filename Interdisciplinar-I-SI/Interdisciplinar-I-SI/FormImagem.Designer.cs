@@ -30,13 +30,16 @@
         {
             this.pictureBoxImagem = new System.Windows.Forms.PictureBox();
             this.buttonInputImage = new System.Windows.Forms.Button();
-            this.buttonRedimencionar = new System.Windows.Forms.Button();
+            this.buttonRedimencionarParalelo = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxPixeis = new System.Windows.Forms.TextBox();
             this.buttonRedimencionarEInverter = new System.Windows.Forms.Button();
             this.labelProporcao = new System.Windows.Forms.Label();
             this.buttonAntiAliasing = new System.Windows.Forms.Button();
             this.buttonSalvarImagem = new System.Windows.Forms.Button();
+            this.buttonRedimencionarSequencial = new System.Windows.Forms.Button();
+            this.labelTempoSequencial = new System.Windows.Forms.Label();
+            this.labelTempoParalelo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxImagem)).BeginInit();
             this.SuspendLayout();
             // 
@@ -62,15 +65,15 @@
             this.buttonInputImage.UseVisualStyleBackColor = true;
             this.buttonInputImage.Click += new System.EventHandler(this.buttonInputImage_Click);
             // 
-            // buttonRedimencionar
+            // buttonRedimencionarParalelo
             // 
-            this.buttonRedimencionar.Location = new System.Drawing.Point(12, 96);
-            this.buttonRedimencionar.Name = "buttonRedimencionar";
-            this.buttonRedimencionar.Size = new System.Drawing.Size(164, 23);
-            this.buttonRedimencionar.TabIndex = 3;
-            this.buttonRedimencionar.Text = "Redimencionar";
-            this.buttonRedimencionar.UseVisualStyleBackColor = true;
-            this.buttonRedimencionar.Click += new System.EventHandler(this.buttonRedimencionar_Click);
+            this.buttonRedimencionarParalelo.Location = new System.Drawing.Point(11, 125);
+            this.buttonRedimencionarParalelo.Name = "buttonRedimencionarParalelo";
+            this.buttonRedimencionarParalelo.Size = new System.Drawing.Size(164, 23);
+            this.buttonRedimencionarParalelo.TabIndex = 3;
+            this.buttonRedimencionarParalelo.Text = "Redimencionar (Paralelo)";
+            this.buttonRedimencionarParalelo.UseVisualStyleBackColor = true;
+            this.buttonRedimencionarParalelo.Click += new System.EventHandler(this.buttonRedimencionar_Click);
             // 
             // label1
             // 
@@ -93,13 +96,13 @@
             // 
             // buttonRedimencionarEInverter
             // 
-            this.buttonRedimencionarEInverter.Location = new System.Drawing.Point(12, 125);
+            this.buttonRedimencionarEInverter.Location = new System.Drawing.Point(11, 154);
             this.buttonRedimencionarEInverter.Name = "buttonRedimencionarEInverter";
             this.buttonRedimencionarEInverter.Size = new System.Drawing.Size(164, 23);
             this.buttonRedimencionarEInverter.TabIndex = 6;
-            this.buttonRedimencionarEInverter.Text = "Inverter";
+            this.buttonRedimencionarEInverter.Text = "Inverter cor";
             this.buttonRedimencionarEInverter.UseVisualStyleBackColor = true;
-            this.buttonRedimencionarEInverter.Click += new System.EventHandler(this.buttonRedimencionarEInverter_Click);
+            this.buttonRedimencionarEInverter.Click += new System.EventHandler(this.buttonInverterCor_Click);
             // 
             // labelProporcao
             // 
@@ -112,7 +115,7 @@
             // 
             // buttonAntiAliasing
             // 
-            this.buttonAntiAliasing.Location = new System.Drawing.Point(13, 155);
+            this.buttonAntiAliasing.Location = new System.Drawing.Point(12, 183);
             this.buttonAntiAliasing.Name = "buttonAntiAliasing";
             this.buttonAntiAliasing.Size = new System.Drawing.Size(163, 23);
             this.buttonAntiAliasing.TabIndex = 8;
@@ -131,12 +134,46 @@
             this.buttonSalvarImagem.UseVisualStyleBackColor = true;
             this.buttonSalvarImagem.Click += new System.EventHandler(this.buttonSalvarImagem_Click);
             // 
+            // buttonRedimencionarSequencial
+            // 
+            this.buttonRedimencionarSequencial.Location = new System.Drawing.Point(12, 96);
+            this.buttonRedimencionarSequencial.Name = "buttonRedimencionarSequencial";
+            this.buttonRedimencionarSequencial.Size = new System.Drawing.Size(163, 23);
+            this.buttonRedimencionarSequencial.TabIndex = 10;
+            this.buttonRedimencionarSequencial.Text = "Redimencionar (Sequencial)";
+            this.buttonRedimencionarSequencial.UseVisualStyleBackColor = true;
+            this.buttonRedimencionarSequencial.Click += new System.EventHandler(this.buttonRedimencionarSequencial_Click);
+            // 
+            // labelTempoSequencial
+            // 
+            this.labelTempoSequencial.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelTempoSequencial.AutoSize = true;
+            this.labelTempoSequencial.Location = new System.Drawing.Point(15, 441);
+            this.labelTempoSequencial.Name = "labelTempoSequencial";
+            this.labelTempoSequencial.Size = new System.Drawing.Size(97, 13);
+            this.labelTempoSequencial.TabIndex = 11;
+            this.labelTempoSequencial.Text = "Tempo sequencial:";
+            this.labelTempoSequencial.Click += new System.EventHandler(this.labelTempoSequencial_Click);
+            // 
+            // labelTempoParalelo
+            // 
+            this.labelTempoParalelo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelTempoParalelo.AutoSize = true;
+            this.labelTempoParalelo.Location = new System.Drawing.Point(15, 458);
+            this.labelTempoParalelo.Name = "labelTempoParalelo";
+            this.labelTempoParalelo.Size = new System.Drawing.Size(83, 13);
+            this.labelTempoParalelo.TabIndex = 12;
+            this.labelTempoParalelo.Text = "Tempo paralelo:";
+            // 
             // FormImagem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(834, 523);
+            this.Controls.Add(this.labelTempoParalelo);
+            this.Controls.Add(this.labelTempoSequencial);
+            this.Controls.Add(this.buttonRedimencionarSequencial);
             this.Controls.Add(this.buttonSalvarImagem);
             this.Controls.Add(this.buttonAntiAliasing);
             this.Controls.Add(this.pictureBoxImagem);
@@ -144,7 +181,7 @@
             this.Controls.Add(this.buttonRedimencionarEInverter);
             this.Controls.Add(this.textBoxPixeis);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.buttonRedimencionar);
+            this.Controls.Add(this.buttonRedimencionarParalelo);
             this.Controls.Add(this.buttonInputImage);
             this.Name = "FormImagem";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -161,13 +198,16 @@
 
         private System.Windows.Forms.PictureBox pictureBoxImagem;
         private System.Windows.Forms.Button buttonInputImage;
-        private System.Windows.Forms.Button buttonRedimencionar;
+        private System.Windows.Forms.Button buttonRedimencionarParalelo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBoxPixeis;
         private System.Windows.Forms.Button buttonRedimencionarEInverter;
         private System.Windows.Forms.Label labelProporcao;
         private System.Windows.Forms.Button buttonAntiAliasing;
         private System.Windows.Forms.Button buttonSalvarImagem;
+        private System.Windows.Forms.Button buttonRedimencionarSequencial;
+        private System.Windows.Forms.Label labelTempoSequencial;
+        private System.Windows.Forms.Label labelTempoParalelo;
     }
 }
 

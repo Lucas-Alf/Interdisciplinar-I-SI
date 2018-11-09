@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 
@@ -31,7 +32,11 @@ namespace Interdisciplinar_I_SI
         {
             if (validaImagem())
             {
-                var imagem = new Redimencionador().RedimencionarComMatriz(pictureBoxImagem.Image, Convert.ToInt32(textBoxPixeis.Text));
+                Stopwatch bechmarkinson = new Stopwatch();
+                bechmarkinson.Start();
+                var imagem = new Redimencionador().RedimencionarParalelo(pictureBoxImagem.Image, Convert.ToInt32(textBoxPixeis.Text));
+                bechmarkinson.Stop();
+                labelTempoParalelo.Text = "Tempo paralelo: " + bechmarkinson.Elapsed.TotalSeconds + "s";
                 pictureBoxImagem.Image = imagem;
             }
         }
@@ -124,12 +129,23 @@ namespace Interdisciplinar_I_SI
             }
         }
 
-        private void buttonRedimencionarEInverter_Click(object sender, EventArgs e)
+        private void buttonInverterCor_Click(object sender, EventArgs e)
         {
-            if (validaImagem())
+            if (pictureBoxImagem.Image == null)
             {
-                var imagem = new Redimencionador().Inverter(pictureBoxImagem.Image);
-                pictureBoxImagem.Image = imagem;
+                MessageBox.Show("Nenhuma imagem foi selecionada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                if (pictureBoxImagem.Image.Height != pictureBoxImagem.Image.Width)
+                {
+                    MessageBox.Show("A imagem não é quadrada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    var imagem = new Redimencionador().InverterCor(pictureBoxImagem.Image);
+                    pictureBoxImagem.Image = imagem;
+                }
             }
         }
 
@@ -174,6 +190,24 @@ namespace Interdisciplinar_I_SI
             {
                 MessageBox.Show("Nenhuma imagem foi selecionada!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void buttonRedimencionarSequencial_Click(object sender, EventArgs e)
+        {
+            if (validaImagem())
+            {
+                Stopwatch bechmarkinson = new Stopwatch();
+                bechmarkinson.Start();
+                var imagem = new Redimencionador().RedimencionarSequencial(pictureBoxImagem.Image, Convert.ToInt32(textBoxPixeis.Text));
+                bechmarkinson.Stop();
+                labelTempoSequencial.Text = "Tempo sequencial: " + bechmarkinson.Elapsed.TotalSeconds + "s";
+                pictureBoxImagem.Image = imagem;
+            }
+        }
+
+        private void labelTempoSequencial_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
