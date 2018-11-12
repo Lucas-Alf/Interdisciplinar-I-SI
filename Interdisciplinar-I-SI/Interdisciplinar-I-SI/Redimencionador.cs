@@ -32,7 +32,7 @@ namespace Interdisciplinar_I_SI
                     {
                         for (int j = 0; j < pixeis; j++)
                         {
-                            novaMatriz[i + (x + ((x * pixeis) - x)), j + (y + ((y * pixeis) - y))] = matriz[x, y];
+                            novaMatriz[i + (x * pixeis), j + (y * pixeis)] = matriz[x, y];
                         }
                     }
                 });
@@ -80,7 +80,7 @@ namespace Interdisciplinar_I_SI
                     {
                         for (int j = 0; j < pixeis; j++)
                         {
-                            novaMatriz[i + (x + ((x * pixeis) - x)), j + (y + ((y * pixeis) - y))] = matriz[x, y];
+                            novaMatriz[i + (x * pixeis), j + (y * pixeis)] = matriz[x, y];
                         }
                     }
                 }
