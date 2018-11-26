@@ -35,7 +35,6 @@
             this.textBoxPixeis = new System.Windows.Forms.TextBox();
             this.buttonRedimencionarEInverter = new System.Windows.Forms.Button();
             this.labelProporcao = new System.Windows.Forms.Label();
-            this.buttonAntiAliasing = new System.Windows.Forms.Button();
             this.buttonSalvarImagem = new System.Windows.Forms.Button();
             this.buttonRedimencionarSequencial = new System.Windows.Forms.Button();
             this.labelTempoSequencial = new System.Windows.Forms.Label();
@@ -113,16 +112,6 @@
             this.labelProporcao.TabIndex = 7;
             this.labelProporcao.Text = "0x0";
             // 
-            // buttonAntiAliasing
-            // 
-            this.buttonAntiAliasing.Location = new System.Drawing.Point(12, 183);
-            this.buttonAntiAliasing.Name = "buttonAntiAliasing";
-            this.buttonAntiAliasing.Size = new System.Drawing.Size(163, 23);
-            this.buttonAntiAliasing.TabIndex = 8;
-            this.buttonAntiAliasing.Text = "Anti Aliasing";
-            this.buttonAntiAliasing.UseVisualStyleBackColor = true;
-            this.buttonAntiAliasing.Click += new System.EventHandler(this.buttonAntiAliasing_Click);
-            // 
             // buttonSalvarImagem
             // 
             this.buttonSalvarImagem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -175,7 +164,6 @@
             this.Controls.Add(this.labelTempoSequencial);
             this.Controls.Add(this.buttonRedimencionarSequencial);
             this.Controls.Add(this.buttonSalvarImagem);
-            this.Controls.Add(this.buttonAntiAliasing);
             this.Controls.Add(this.pictureBoxImagem);
             this.Controls.Add(this.labelProporcao);
             this.Controls.Add(this.buttonRedimencionarEInverter);
@@ -203,7 +191,6 @@
         private System.Windows.Forms.TextBox textBoxPixeis;
         private System.Windows.Forms.Button buttonRedimencionarEInverter;
         private System.Windows.Forms.Label labelProporcao;
-        private System.Windows.Forms.Button buttonAntiAliasing;
         private System.Windows.Forms.Button buttonSalvarImagem;
         private System.Windows.Forms.Button buttonRedimencionarSequencial;
         private System.Windows.Forms.Label labelTempoSequencial;
